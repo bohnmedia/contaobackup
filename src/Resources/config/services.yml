@@ -2,11 +2,11 @@ services:
     _instanceof:
         Contao\CoreBundle\Framework\FrameworkAwareInterface:
             calls:
-                - ["setFramework", ["@contao.framework"]]
+                - ['setFramework', ['@contao.framework']]
 
         Symfony\Component\DependencyInjection\ContainerAwareInterface:
             calls:
-                - ["setContainer", ["@service_container"]]
+                - ['setContainer', ['@service_container']]
 
     bohnmedia.contaobackup:
         class: BohnMedia\ContaoBackupBundle\ContaoBackup
@@ -15,6 +15,6 @@ services:
 
     BohnMedia\ContaoBackupBundle\Controller\BackupController:
         arguments:
-            - "@contao.framework"
+            - '@contao.framework'
             - '@bohnmedia.contaobackup'
         tags: ['controller.service_arguments']
