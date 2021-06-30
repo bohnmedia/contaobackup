@@ -1,0 +1,6 @@
+jsonoutput:
+    path: /contao/backup
+    defaults:
+        _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:loadAction
+        _scope: frontend
+        _token_check: false
