@@ -6,3 +6,4 @@ contaobackup:
         _token_check: false
     requirements:
         hash: .+
+    methods: [GET]
