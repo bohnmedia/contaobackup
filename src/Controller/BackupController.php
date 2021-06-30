@@ -24,8 +24,19 @@ class BackupController
 
     $serverKey = $this->config->get('backupKey');
     $clientKey = $request->query->get('key');
+    $response = new Response();
 
-		return new Response("Hello World! / " . $clientKey . " / " . $serverKey);
+    if (!$clientKey) {
+      $response->setContent('Please use a key to download a backup');
+      $response->headers->set('Content-Type', 'text/plain');
+      $response->setStatusCode(400);
+      return $response;
+    }
+
+    $response->setContent("Hello World! / " . $clientKey . " / " . $serverKey);
+    $response->headers->set('Content-Type', 'text/plain');
+    $response->setStatusCode(200);
+    return $response;
 
   }
 
