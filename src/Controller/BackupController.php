@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 class BackupController
 {
 
-  public function loadAction(): Response
+  public function loadAction($hash): Response
   {
     
-		return new Response("Hello World!");
+		return new Response("Hello World! " . $hash);
 
   }
 
