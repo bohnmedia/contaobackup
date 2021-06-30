@@ -36,13 +36,13 @@ class BackupController
 
     // Wrong key
     if ($clientKey !== $serverKey) {
-      $response->setContent('Wrong key (' . $clientKey . ' !== ' . $serverKey . ')');
+      $response->setContent('Wrong key');
       $response->headers->set('Content-Type', 'text/plain');
       $response->setStatusCode(401);
       return $response;
     }
 
-    $response->setContent("Hello World! / " . $clientKey . " / " . $serverKey);
+    $response->setContent("Key correct");
     $response->headers->set('Content-Type', 'text/plain');
     $response->setStatusCode(200);
     return $response;
