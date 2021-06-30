@@ -7,3 +7,10 @@ services:
         Symfony\Component\DependencyInjection\ContainerAwareInterface:
             calls:
                 - ["setContainer", ["@service_container"]]
+
+    BohnMedia\Controller\BackupController:
+        arguments:
+            - '%kernel.project_dir%'
+            - "@session"
+            - "@contao.framework"
+        tags: ['controller.service_arguments']
