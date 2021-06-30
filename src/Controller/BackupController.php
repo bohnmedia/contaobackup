@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Config;
-use BohnMedia\ContaoBackupBundle\ContaoBackup
+use BohnMedia\ContaoBackupBundle\ContaoBackup;
 
 class BackupController
 {
