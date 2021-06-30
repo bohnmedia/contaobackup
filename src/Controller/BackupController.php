@@ -26,10 +26,19 @@ class BackupController
     $clientKey = $request->query->get('key');
     $response = new Response();
 
+    // No key
     if (!$clientKey) {
-      $response->setContent('Please use a key to download a backup');
+      $response->setContent('Please use a key');
       $response->headers->set('Content-Type', 'text/plain');
       $response->setStatusCode(400);
+      return $response;
+    }
+
+    // Wrong key
+    if ($clientKey !== $serverKey) {
+      $response->setContent('Wrong key');
+      $response->headers->set('Content-Type', 'text/plain');
+      $response->setStatusCode(401);
       return $response;
     }
 
