@@ -8,7 +8,7 @@ services:
             calls:
                 - ["setContainer", ["@service_container"]]
 
-    BohnMedia\Controller\BackupController:
+    BohnMedia\ContaoBackupBundle\Controller\BackupController:
         arguments:
             - '%kernel.project_dir%'
             - "@session"
