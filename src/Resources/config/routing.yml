@@ -1,9 +1,7 @@
 contaobackup:
-    path: /contao/backup/{hash}
+    path: /backup
     defaults:
         _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:loadAction
         _scope: frontend
         _token_check: false
-    requirements:
-        hash: .+
     methods: [GET]
