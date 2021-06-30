@@ -9,8 +9,4 @@ services:
                 - ["setContainer", ["@service_container"]]
 
     BohnMedia\ContaoBackupBundle\Controller\BackupController:
-        arguments:
-            - '%kernel.project_dir%'
-            - "@session"
-            - "@contao.framework"
         tags: ['controller.service_arguments']
