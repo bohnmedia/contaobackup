@@ -11,3 +11,4 @@ services:
     BohnMedia\ContaoBackupBundle\Controller\BackupController:
         arguments:
             - "@contao.framework"
+        tags: ['controller.service_arguments']
