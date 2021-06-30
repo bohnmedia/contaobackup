@@ -13,6 +13,8 @@ class BackupController
     
     $key = $request->query->get('key');
 
+    var_dump($key);
+
 		return new Response("Hello World! " . $key);
 
   }
