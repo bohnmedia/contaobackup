@@ -3,3 +3,4 @@ contaobackup:
     defaults:
         _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:loadAction
         _scope: backend
+        _token_check: false
