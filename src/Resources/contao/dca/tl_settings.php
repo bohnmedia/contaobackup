@@ -4,5 +4,5 @@ $GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] = preg_replace('/(?=\{c
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['backupKey'] = [
     'inputType'               => 'text',
-    'eval'                    => ['tl_class'=>'w50']
+    'eval'                    => ['useRawRequestData'=>true, 'tl_class'=>'w50']
 ];
