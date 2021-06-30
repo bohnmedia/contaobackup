@@ -56,7 +56,7 @@ class ContaoBackup {
             
             // Check if $file is a directory
             if (is_dir($absFile) && $recursive) {
-                addDirToZip($relFile);
+                $this->addDirToZip($relFile);
             }
             
             // Add File to zip
