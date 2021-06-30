@@ -9,11 +9,9 @@ class BackupController
 
   public function loadAction(): Response
   {
+    
+		return new Response("Hello World!");
 
-    echo "Hello World";
-    exit();
-
-		// return new Response("Hello World!");
   }
 
 }
