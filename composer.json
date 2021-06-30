@@ -16,7 +16,8 @@
     ],
     "require": {
         "php": "^7.1",
-        "contao/core-bundle": "^4.4"
+        "contao/core-bundle": "^4.4",
+        "ifsnop/mysqldump-php": "^2.9"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0"
