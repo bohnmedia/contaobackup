@@ -1,5 +1,5 @@
 contaobackup:
-    path: /backup
+    path: /backup.html
     defaults:
         _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:loadAction
         _scope: frontend
