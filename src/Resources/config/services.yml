@@ -7,6 +7,3 @@ services:
         Symfony\Component\DependencyInjection\ContainerAwareInterface:
             calls:
                 - ["setContainer", ["@service_container"]]
-
-    BohnMedia\ContaoBackupBundle\Controller\BackupController:
-        tags: ['controller.service_arguments']
