@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Config;
-use BohnMedia\ContaoBackupBundle\ContaoBackup;
+use Contao\System;
 
 class BackupController
 {
@@ -43,8 +43,7 @@ class BackupController
       return $response;
     }
 
-    $contaoBackup = new ContaoBackup();
-    return $contaoBackup->binaryFileResponse();
+    return System::getContainer()->get('bohnmedia.contaobackup')->binaryFileResponse();
 
   }
 
