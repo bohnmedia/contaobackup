@@ -36,7 +36,7 @@ class BackupController
 
     // Wrong key
     if ($clientKey !== $serverKey) {
-      $response->setContent('Wrong key');
+      $response->setContent('Wrong key (' . $clientKey . ' !== ' . $serverKey . ')');
       $response->headers->set('Content-Type', 'text/plain');
       $response->setStatusCode(401);
       return $response;
