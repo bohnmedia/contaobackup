@@ -76,7 +76,13 @@ class ContaoBackup {
         $this->addDirToZip('system/config');
         $this->addDirToZip('contao-manager', false);
         $this->closeZip();
-        return new BinaryFileResponse($this->zipFilePath);
+
+        $response = new BinaryFileResponse($this->zipFilePath);
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'backup-' . date('Y-m-d_H-m-s') . '.zip'
+        );
+        return $response;
     }
 
 }
