@@ -1,0 +1,34 @@
+{
+    "name": "bohnmedia/contaobackup",
+    "description": "Contao extension for backups",
+    "keywords": [
+        "contao",
+        "backup"
+    ],
+    "type": "contao-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "bohn.media",
+            "homepage": "https://bohn.media"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "contao/core-bundle": "^4.4"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0"
+    },
+    "conflict": {
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BohnMedia\\ContaoBackupBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "BohnMedia\\ContaoBackupBundle\\ContaoManager\\Plugin"
+    }
+}
