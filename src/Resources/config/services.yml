@@ -5,5 +5,7 @@ services:
                 - ["setFramework", ["@contao.framework"]]
 
         Symfony\Component\DependencyInjection\ContainerAwareInterface:
+            arguments:
+                - "@contao.framework"
             calls:
                 - ["setContainer", ["@service_container"]]
