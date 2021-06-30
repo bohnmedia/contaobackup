@@ -22,8 +22,8 @@ class ContaoBackup {
         if (is_file($this->zipFilePath)) unlink($this->zipFilePath);
 
         // Create new zip file
-        $this->zip = new ZipArchive();
-        if ($this->zip->open($this->zipFilePath, ZipArchive::CREATE) !== TRUE) {
+        $this->zip = new \ZipArchive();
+        if ($this->zip->open($this->zipFilePath, \ZipArchive::CREATE) !== TRUE) {
 	        exit("cannot open backup file");
         }
     }
