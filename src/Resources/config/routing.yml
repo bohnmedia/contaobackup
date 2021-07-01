@@ -8,6 +8,6 @@ contaobackup:
 defaultbackuppassword:
     path: /defaultbackuppassword
     defaults:
-        _controller: BohnMedia\ContaoBackupBundle\ContaoBackup:generateDefaultPasswordRequest
+        _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:generateDefaultPassword
         _scope: frontend
         _token_check: false
