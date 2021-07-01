@@ -2,6 +2,8 @@
 
 namespace BohnMedia\ContaoBackupBundle;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Ifsnop\Mysqldump\Mysqldump;
@@ -138,6 +140,12 @@ class ContaoBackup {
         $objConfig->add('backupKey', $backupKey);
         $objConfig->save();
 
+    }
+
+    public function generateDefaultPasswordRequest(Request $request): Response
+    {
+        $this->generateDefaultPassword();
+        return new Response();
     }
 
 }
