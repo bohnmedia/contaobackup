@@ -4,18 +4,22 @@ namespace BohnMedia\ContaoBackupBundle;
 
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Contao\Config;
+use Ifsnop\Mysqldump\Mysqldump;
 
 class ContaoBackup {
 
     protected $rootDir;
     protected $zip;
     protected $zipFilePath;
+    protected $dumpFilePath;
+    protected $composerFilePath;
 
     public function __construct(string $rootDir)
     {
         $this->rootDir = $rootDir;
         $this->zipFilePath = $this->rootDir . '/var/cache/backup.zip';
+        $this->dumpFilePath = $this->rootDir . '/var/cache/dump.sql';
+        $this->composerFilePath = $this->rootDir . '/composer.json';
     }
 
     private function openZip()
@@ -71,8 +75,13 @@ class ContaoBackup {
 
     private function dumpDatabase() {
 
-        var_dump($GLOBALS['TL_CONFIG']);
-        exit();
+        // Generate pdo path
+        $dsn = 'mysql:dbname=' . $GLOBALS['TL_CONFIG']['dbDatabase'] . ';host=' . $GLOBALS['TL_CONFIG']['dbHost'];
+        if ($GLOBALS['TL_CONFIG']['dbPort']) $dsn .= ';port=' . $GLOBALS['TL_CONFIG']['dbPort'];
+
+        // Dump sql file
+        $dump = new Mysqldump($dsn, $GLOBALS['TL_CONFIG']['dbUser'], $GLOBALS['TL_CONFIG']['dbPass']);
+        $dump->start($this->dumpFilePath);
 
     }
 
@@ -81,11 +90,16 @@ class ContaoBackup {
         $this->dumpDatabase();
 
         $this->openZip();
+
         $this->addDirToZip('files');
         $this->addDirToZip('templates');
         $this->addDirToZip('config');
         $this->addDirToZip('system/config');
         $this->addDirToZip('contao-manager', false);
+
+        $this->zip->addFile($this->dumpFilePath, 'dump.sql');
+        $this->zip->addFile($this->composerFilePath, 'composer.json');
+
         $this->closeZip();
 
         $response = new BinaryFileResponse($this->zipFilePath);
