@@ -32,5 +32,10 @@
     },
     "extra": {
         "contao-manager-plugin": "BohnMedia\\ContaoBackupBundle\\ContaoManager\\Plugin"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "BohnMedia\\ContaoBackupBundle\\ContaoBackup::generateDefaultPassword"
+        ]
     }
 }

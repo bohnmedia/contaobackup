@@ -5,6 +5,7 @@ namespace BohnMedia\ContaoBackupBundle;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Ifsnop\Mysqldump\Mysqldump;
+use Contao\Config;
 
 class ContaoBackup {
 
@@ -118,6 +119,24 @@ class ContaoBackup {
             'backup-' . date('Y-m-d_H-m-s') . '.zip'
         );
         return $response;
+
+    }
+
+    public function generateDefaultPassword()
+    {
+
+        // Generate string
+        $backupKey = '';
+        $allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $max = strlen($allowedChars) - 1;
+        for ($i=0; $i<32; $i++) {
+            $backupKey .= substr($allowedChars, rand(0, $max), 1);
+        }
+        
+        // Update localconfig
+        $objConfig = Config::getInstance();
+        $objConfig->add('backupKey', $backupKey);
+        $objConfig->save();
 
     }
 
