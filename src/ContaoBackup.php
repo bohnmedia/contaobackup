@@ -122,7 +122,7 @@ class ContaoBackup {
 
     }
 
-    public function generateDefaultPassword()
+    public function generateDefaultPassword(): void
     {
 
         // Generate string
