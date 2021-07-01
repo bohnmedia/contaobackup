@@ -110,8 +110,6 @@ class ContaoBackup {
         // Delete database dump
         unlink($this->dumpFilePath);
 
-        exit();
-
         // Send zip file to client
         $response = new BinaryFileResponse($this->zipFilePath);
         $response->deleteFileAfterSend();
