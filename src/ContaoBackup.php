@@ -124,17 +124,14 @@ class ContaoBackup {
 
     }
 
-    public function initializeSystem(): void
+    public function initializeSystem()
     {
 
+        // Skip if backupKey exists
         $objConfig = Config::getInstance();
-        var_dump($objConfig->has('backupKey'));
-        exit();
+        if ($objConfig->has('backupKey')) return;
 
-
-        /*
-
-        // Generate string
+        // Generate key
         $backupKey = '';
         $allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $max = strlen($allowedChars) - 1;
@@ -143,11 +140,8 @@ class ContaoBackup {
         }
         
         // Update localconfig
-        $objConfig = Config::getInstance();
         $objConfig->add("\$GLOBALS['TL_CONFIG']['backupKey']", $backupKey);
         $objConfig->save();
-
-        */
 
     }
 
