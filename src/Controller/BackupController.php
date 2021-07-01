@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Config;
 use BohnMedia\ContaoBackupBundle\ContaoBackup;
+use BohnMedia\ContaoBackupBundle\ScriptHandler;
 
 class BackupController
 {
@@ -51,7 +52,8 @@ class BackupController
 
   public function generateDefaultPassword(Request $request): Response
   {
-    $this->contaobackup->generateDefaultPassword();
+    $scriptHandler = new ScriptHandler();
+    $scriptHandler->generateDefaultPassword();
     return new Response();
   }
 
