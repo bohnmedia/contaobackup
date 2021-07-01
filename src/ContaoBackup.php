@@ -13,7 +13,6 @@ class ContaoBackup {
     protected $zipFilePath;
     protected $dumpFilePath;
     protected $composerFilePath;
-    protected $stop;
 
     public function __construct(string $rootDir)
     {
@@ -21,8 +20,6 @@ class ContaoBackup {
         $this->zipFilePath = $this->rootDir . '/var/cache/backup.zip';
         $this->dumpFilePath = $this->rootDir . '/var/cache/dump.sql';
         $this->composerFilePath = $this->rootDir . '/composer.json';
-
-        $this->stop = isset($_GET["stop"]) ? (int)$_GET["stop"] : false;
     }
 
     private function openZip()
@@ -69,7 +66,6 @@ class ContaoBackup {
             
             // Add File to zip
             if (is_file($absFile)) {
-                var_dump('add file');
                 $this->zip->addFile($absFile, $relFile);
             }
     
@@ -95,30 +91,26 @@ class ContaoBackup {
         $this->openZip();
 
         // Backup folders
-        var_dump("add directories");
         $this->addDirToZip('files');
         $this->addDirToZip('templates');
         $this->addDirToZip('config');
         $this->addDirToZip('system/config');
         $this->addDirToZip('contao-manager', false);
-        var_dump(is_file($this->zipFilePath));
-        if ($this->stop === 1) exit();
 
         // Backup database
         $this->dumpDatabase();
-        if ($this->stop === 2) exit();
         $this->zip->addFile($this->dumpFilePath, 'dump.sql');
-        if ($this->stop === 3) exit();
-        unlink($this->dumpFilePath);
-        if ($this->stop === 4) exit();
 
         // Backup composer.json
         $this->zip->addFile($this->composerFilePath, 'composer.json');
-        if ($this->stop === 5) exit();
 
         // Close zip file
         $this->closeZip();
-        if ($this->stop === 6) exit();
+
+        // Delete database dump
+        unlink($this->dumpFilePath);
+
+        exit();
 
         // Send zip file to client
         $response = new BinaryFileResponse($this->zipFilePath);
