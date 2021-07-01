@@ -12,6 +12,7 @@ services:
         class: BohnMedia\ContaoBackupBundle\ContaoBackup
         arguments:
             - '%kernel.project_dir%'
+        tags: ['controller.service_arguments']
 
     BohnMedia\ContaoBackupBundle\Controller\BackupController:
         arguments:
