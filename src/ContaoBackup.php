@@ -24,21 +24,6 @@ class ContaoBackup {
 
     private function openZip()
     {
-        // Delete zip if it exists
-        if (is_file($this->zipFilePath)) {
-            unlink($this->zipFilePath);
-        }
-
-        // Test
-        /*
-        $myfile = fopen($this->zipFilePath, "w") or die("Unable to open file!");
-        fclose($myfile);
-
-        var_dump("open");
-        var_dump($this->zipFilePath);
-        var_dump(is_file($this->zipFilePath));
-        exit();
-        */
 
         // Create new zip file
         $this->zip = new \ZipArchive();
@@ -46,18 +31,10 @@ class ContaoBackup {
 	        exit("cannot open backup file");
         }
 
-        var_dump("open");
-        var_dump($this->zipFilePath);
-        var_dump(is_file($this->zipFilePath));
-        exit();
-
     }
 
     private function closeZip()
     {
-        var_dump("close");
-        var_dump(is_file($this->zipFilePath));
-        exit();
         $this->zip->close();
     }
 
@@ -114,11 +91,14 @@ class ContaoBackup {
         $this->openZip();
 
         // Backup folders
+        var_dump("add directories");
         $this->addDirToZip('files');
         $this->addDirToZip('templates');
         $this->addDirToZip('config');
         $this->addDirToZip('system/config');
         $this->addDirToZip('contao-manager', false);
+        var_dump(is_file($this->zipFilePath));
+        exit();
 
         // Backup database
         $this->dumpDatabase();
