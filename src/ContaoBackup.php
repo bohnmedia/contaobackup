@@ -4,6 +4,7 @@ namespace BohnMedia\ContaoBackupBundle;
 
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Contao\Config;
 
 class ContaoBackup {
 
@@ -68,8 +69,21 @@ class ContaoBackup {
         }
     }
 
+    private function dumpDatabase() {
+
+        var_dump(Config::get('database_host'));
+        var_dump(Config::get('database_port'));
+        var_dump(Config::get('database_user'));
+        var_dump(Config::get('database_password'));
+        var_dump(Config::get('database_name'));
+        exit();
+
+    }
+
     public function binaryFileResponse()
     {
+        $this->dumpDatabase();
+
         $this->openZip();
         $this->addDirToZip('files');
         $this->addDirToZip('templates');
