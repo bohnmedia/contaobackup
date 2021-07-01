@@ -124,7 +124,7 @@ class ContaoBackup {
 
     }
 
-    public function generateDefaultPassword(): void
+    public function generateDefaultPassword(Event $event): void
     {
 
         // Generate string
