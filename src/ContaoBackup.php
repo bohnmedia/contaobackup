@@ -71,11 +71,7 @@ class ContaoBackup {
 
     private function dumpDatabase() {
 
-        var_dump(Config::get('database_host'));
-        var_dump(Config::get('database_port'));
-        var_dump(Config::get('database_user'));
-        var_dump(Config::get('database_password'));
-        var_dump(Config::get('database_name'));
+        var_dump($GLOBALS['TL_CONFIG']);
         exit();
 
     }
