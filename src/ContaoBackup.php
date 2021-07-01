@@ -142,10 +142,4 @@ class ContaoBackup {
 
     }
 
-    public function generateDefaultPasswordRequest(Request $request): Response
-    {
-        $this->generateDefaultPassword();
-        return new Response();
-    }
-
 }

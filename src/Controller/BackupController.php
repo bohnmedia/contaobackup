@@ -52,6 +52,7 @@ class BackupController
   public function generateDefaultPassword(Request $request): Response
   {
     $this->contaobackup->generateDefaultPassword();
+    return new Response();
   }
 
 }
