@@ -36,6 +36,8 @@ class ContaoBackup {
 
     private function closeZip()
     {
+        var_dump(is_file($this->zipFilePath));
+        exit();
         $this->zip->close();
     }
 
