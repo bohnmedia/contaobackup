@@ -127,7 +127,10 @@ class ContaoBackup {
     public function initializeSystem(): void
     {
 
-        exit('HOOK!');
+        $objConfig = Config::getInstance();
+        var_dump($objConfig->has('backupKey'));
+        exit();
+
 
         /*
 
