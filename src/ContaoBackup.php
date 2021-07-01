@@ -42,7 +42,7 @@ class ContaoBackup {
 
         // Create new zip file
         $this->zip = new \ZipArchive();
-        if ($this->zip->open($this->zipFilePath, \ZipArchive::CREATE) !== TRUE) {
+        if ($this->zip->open($this->zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
 	        exit("cannot open backup file");
         }
 
