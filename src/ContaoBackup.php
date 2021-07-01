@@ -99,7 +99,6 @@ class ContaoBackup {
         $this->addDirToZip('system/config');
         $this->addDirToZip('contao-manager', false);
         var_dump(is_file($this->zipFilePath));
-        exit();
 
         // Backup database
         $this->dumpDatabase();
@@ -111,6 +110,7 @@ class ContaoBackup {
 
         // Close zip file
         $this->closeZip();
+        exit();
 
         // Send zip file to client
         $response = new BinaryFileResponse($this->zipFilePath);
