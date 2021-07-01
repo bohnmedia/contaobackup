@@ -124,8 +124,10 @@ class ContaoBackup {
 
     }
 
-    public function generateDefaultPassword(Event $event): void
+    public function initializeSystem(): void
     {
+
+        exit('HOOK!');
 
         /*
 

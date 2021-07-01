@@ -12,6 +12,8 @@ services:
         class: BohnMedia\ContaoBackupBundle\ContaoBackup
         arguments:
             - '%kernel.project_dir%'
+        tags:
+            - { name: contao.hook, hook: initializeSystem, method: initializeSystem, priority: 0 }
 
     BohnMedia\ContaoBackupBundle\Controller\BackupController:
         arguments:
