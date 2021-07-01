@@ -12,6 +12,8 @@ services:
         class: BohnMedia\ContaoBackupBundle\ContaoBackup
         arguments:
             - '%kernel.project_dir%'
+        calls:
+            - [setContainer, ["@service_container"]]
         tags: ['controller.service_arguments']
 
     bohnmedia.contaobackupcontroller:
