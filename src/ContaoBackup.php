@@ -124,7 +124,7 @@ class ContaoBackup {
 
     }
 
-    public function initializeSystem()
+    public function initializeSystem(): void
     {
 
         // Skip if backupKey exists
