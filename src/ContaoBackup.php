@@ -29,6 +29,15 @@ class ContaoBackup {
             unlink($this->zipFilePath);
         }
 
+        // Test
+        $myfile = fopen($this->zipFilePath, "w") or die("Unable to open file!");
+        fclose($myfile);
+
+        var_dump("open");
+        var_dump($this->zipFilePath);
+        var_dump(is_file($this->zipFilePath));
+        exit();
+
         // Create new zip file
         $this->zip = new \ZipArchive();
         if ($this->zip->open($this->zipFilePath, \ZipArchive::CREATE) !== TRUE) {
