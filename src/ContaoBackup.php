@@ -25,17 +25,24 @@ class ContaoBackup {
     private function openZip()
     {
         // Delete zip if it exists
-        if (is_file($this->zipFilePath)) unlink($this->zipFilePath);
+        if (is_file($this->zipFilePath)) {
+            unlink($this->zipFilePath);
+        }
 
         // Create new zip file
         $this->zip = new \ZipArchive();
         if ($this->zip->open($this->zipFilePath, \ZipArchive::CREATE) !== TRUE) {
 	        exit("cannot open backup file");
         }
+
+        var_dump("open");
+        var_dump(is_file($this->zipFilePath));
+
     }
 
     private function closeZip()
     {
+        var_dump("close");
         var_dump(is_file($this->zipFilePath));
         exit();
         $this->zip->close();
