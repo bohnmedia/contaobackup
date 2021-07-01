@@ -35,7 +35,7 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "BohnMedia\\ContaoBackupBundle\\ContaoBackup::generateDefaultPassword"
+            "BohnMedia\\ContaoBackupBundle\\ScriptHandler::generateDefaultPassword"
         ]
     }
 }

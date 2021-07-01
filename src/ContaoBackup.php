@@ -127,6 +127,8 @@ class ContaoBackup {
     public function generateDefaultPassword(Event $event): void
     {
 
+        /*
+
         // Generate string
         $backupKey = '';
         $allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -139,6 +141,8 @@ class ContaoBackup {
         $objConfig = Config::getInstance();
         $objConfig->add("\$GLOBALS['TL_CONFIG']['backupKey']", $backupKey);
         $objConfig->save();
+
+        */
 
     }
 
