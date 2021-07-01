@@ -66,6 +66,7 @@ class ContaoBackup {
             
             // Add File to zip
             if (is_file($absFile)) {
+                var_dump('add file');
                 $this->zip->addFile($absFile, $relFile);
             }
     
