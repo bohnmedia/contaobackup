@@ -87,27 +87,37 @@ class ContaoBackup {
 
     public function binaryFileResponse()
     {
-        $this->dumpDatabase();
 
+        // Create and open zip file
         $this->openZip();
 
+        // Backup folders
         $this->addDirToZip('files');
         $this->addDirToZip('templates');
         $this->addDirToZip('config');
         $this->addDirToZip('system/config');
         $this->addDirToZip('contao-manager', false);
 
+        // Backup database
+        $this->dumpDatabase();
         $this->zip->addFile($this->dumpFilePath, 'dump.sql');
+        unlink($this->dumpFilePath);
+
+        // Backup composer.json
         $this->zip->addFile($this->composerFilePath, 'composer.json');
 
+        // Close zip file
         $this->closeZip();
 
+        // Send zip file to client
         $response = new BinaryFileResponse($this->zipFilePath);
+        $response->deleteFileAfterSend();
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             'backup-' . date('Y-m-d_H-m-s') . '.zip'
         );
         return $response;
+
     }
 
 }
