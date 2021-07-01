@@ -36,6 +36,7 @@ class ContaoBackup {
         }
 
         var_dump("open");
+        var_dump($this->zipFilePath);
         var_dump(is_file($this->zipFilePath));
 
     }
