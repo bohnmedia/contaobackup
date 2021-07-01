@@ -137,7 +137,7 @@ class ContaoBackup {
         
         // Update localconfig
         $objConfig = Config::getInstance();
-        $objConfig->add('backupKey', $backupKey);
+        $objConfig->add("\$GLOBALS['TL_CONFIG']['backupKey']", $backupKey);
         $objConfig->save();
 
     }
