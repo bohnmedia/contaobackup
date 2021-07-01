@@ -12,4 +12,7 @@ function generateDefaultBackupKey() {
 
 }
 
-$GLOBALS['TL_CONFIG']['backupKey'] = generateDefaultBackupKey();
+// Set default backup key
+if (!isset($GLOBALS['TL_CONFIG']['backupKey'])) {
+    $GLOBALS['TL_CONFIG']['backupKey'] = generateDefaultBackupKey();
+}
