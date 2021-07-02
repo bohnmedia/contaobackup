@@ -99,6 +99,7 @@ class ContaoBackup {
         $this->addDirToZip('config');
         $this->addDirToZip('system/config');
         $this->addDirToZip('contao-manager', false);
+        $this->addDirToZip('contao');
         $this->addDirToZip('src');
         $this->addDirToZip('_external');
 
