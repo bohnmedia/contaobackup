@@ -94,6 +94,7 @@ class ContaoBackup {
         $this->openZip();
 
         // Backup folders
+        $this->addDirToZip('app');
         $this->addDirToZip('files');
         $this->addDirToZip('templates');
         $this->addDirToZip('config');
