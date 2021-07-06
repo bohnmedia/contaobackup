@@ -16,6 +16,8 @@ class ContaoBackup {
     protected $zipFilePath;
     protected $dumpFilePath;
     protected $composerFilePath;
+    protected $directories = ['app', 'files', 'templates', 'config', 'system/config', 'contao', 'src', '_external'];
+    protected $files = ['composer.json'];
 
     public function __construct(string $rootDir)
     {
@@ -39,6 +41,44 @@ class ContaoBackup {
     private function closeZip()
     {
         $this->zip->close();
+    }
+
+    private function addFilesFromDirectory($path, &$arrFiles = [])
+    {
+
+        // Absolute path
+        $absPath = $this->rootDir . '/' . $path;
+        
+        // Check if directory exists
+        if (!is_dir($absPath)) {
+            return;
+        }
+
+        // Scan directory
+        $files = scandir($absPath);
+        foreach($files as $file) {
+                    
+            // Skip parent folder and this folder
+            if ($file === "." || $file === "..") continue;
+            
+            // Filename with path
+            $absFile = $absPath . "/" . $file;
+            $relFile = $path . "/" . $file;
+            
+            // Check if file is a directory
+            if (is_dir($absFile) && $recursive) {
+                $this->getFilesByDirectory($relFile, $arrFiles);
+            }
+            
+            // Add File to zip
+            if (is_file($absFile)) {
+                array_push($arrFiles, $relFile);
+            }
+    
+        }
+
+        return $arrFiles;
+
     }
 
     private function addDirToZip($path, $recursive = true) {
@@ -87,7 +127,20 @@ class ContaoBackup {
 
     }
 
-    public function binaryFileResponse()
+    public function list()
+    {
+        $arrFiles = [];
+
+        foreach($this->directories as $directory) {
+            $this->addFilesFromDirectory($directory, $arrFiles);
+        }
+
+        var_dump($arrFiles);
+        exit();
+
+    }
+
+    public function download()
     {
 
         // Create and open zip file
@@ -125,6 +178,11 @@ class ContaoBackup {
             'backup-' . date('Y-m-d_H-m-s') . '.zip'
         );
         return $response;
+
+    }
+
+    public function list()
+    {
 
     }
 

@@ -24,10 +24,14 @@ class BackupController
   }
 
   public function download(Request $request): Response {
-    return $this->checkKey($request, $this->contaobackup->binaryFileResponse);
+    return $this->authCallback($request, 'download');
   }
   
-  private function checkKey(Request $request, $callback): Response
+  public function list(Request $request): Response {
+    return $this->authCallback($request, 'list');
+  }
+  
+  private function authCallback(Request $request, $callbackName): Response
   {
 
     $serverKey = $this->config->get('backupKey');
@@ -50,7 +54,7 @@ class BackupController
       return $response;
     }
 
-    return $callback();
+    return $this->contaobackup->{$callbackName}();
 
   }
 

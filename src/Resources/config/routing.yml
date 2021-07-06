@@ -1,7 +1,14 @@
-contaobackup:
+contaobackupdownload:
   path: /contaobackup/download
   defaults:
     _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:download
+    _scope: frontend
+    _token_check: false
+
+contaobackuplist:
+  path: /contaobackup/list
+  defaults:
+    _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:list
     _scope: frontend
     _token_check: false
 
