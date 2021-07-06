@@ -181,11 +181,6 @@ class ContaoBackup {
 
     }
 
-    public function list()
-    {
-
-    }
-
     public function initializeSystem(): void
     {
 
