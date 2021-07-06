@@ -23,12 +23,16 @@ class BackupController
       $this->contaobackup = $contaobackup;
   }
 
-  public function download(Request $request): Response {
-    return $this->authCallback($request, 'download');
+  public function dumpdb(Request $request): Response {
+    return $this->authCallback($request, 'dumpdb');
   }
   
   public function list(Request $request): Response {
     return $this->authCallback($request, 'list');
+  }
+
+  public function file(Request $request): Response {
+    return $this->authCallback($request, 'file');
   }
   
   private function authCallback(Request $request, $callbackName): Response

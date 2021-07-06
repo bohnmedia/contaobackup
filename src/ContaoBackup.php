@@ -27,27 +27,11 @@ class ContaoBackup {
         $this->composerFilePath = $this->rootDir . '/composer.json';
     }
 
-    private function openZip()
-    {
-
-        // Create new zip file
-        $this->zip = new \ZipArchive();
-        if ($this->zip->open($this->zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
-	        exit("cannot open backup file");
-        }
-
-    }
-
-    private function closeZip()
-    {
-        $this->zip->close();
-    }
-
-    private function addFilesFromDirectory($path, &$arrFiles = [])
+    private function addFilesFromDirectory($path, &$arrFiles)
     {
 
         // Absolute path
-        $absPath = $this->rootDir . '/' . $path;
+        $absPath = realpath($this->rootDir . '/' . $path);
         
         // Check if directory exists
         if (!is_dir($absPath)) {
@@ -66,56 +50,37 @@ class ContaoBackup {
             $relFile = $path . "/" . $file;
             
             // Check if file is a directory
-            if (is_dir($absFile) && $recursive) {
-                $this->getFilesByDirectory($relFile, $arrFiles);
+            if (is_dir($absFile)) {
+                $this->addFilesFromDirectory($relFile, $arrFiles);
             }
             
-            // Add File to zip
+            // Add File to list
             if (is_file($absFile)) {
-                array_push($arrFiles, $relFile);
+                $this->addFile($relFile, $arrFiles);
             }
     
         }
 
-        return $arrFiles;
-
     }
 
-    private function addDirToZip($path, $recursive = true) {
-	
+    private function addFile($path, &$arrFiles)
+    {
+
         // Absolute path
-        $absPath = $this->rootDir . '/' . $path;
-        
-        // Check if directory exists
-        if (!is_dir($absPath)) {
-            return;
+        $absFile = realpath($this->rootDir . '/' . $path);
+
+        // Add File to zip
+        if (is_file($absFile)) {
+            array_push($arrFiles, [
+                $path,
+                md5_file($absFile)
+            ]);
         }
-        
-        // Scan directory
-        $files = scandir($absPath);
-        foreach($files as $file) {
-                    
-            // Skip parent folder and this folder
-            if ($file === "." || $file === "..") continue;
-            
-            // Filename with path
-            $absFile = $absPath . "/" . $file;
-            $relFile = $path . "/" . $file;
-            
-            // Check if $file is a directory
-            if (is_dir($absFile) && $recursive) {
-                $this->addDirToZip($relFile);
-            }
-            
-            // Add File to zip
-            if (is_file($absFile)) {
-                $this->zip->addFile($absFile, $relFile);
-            }
-    
-        }
+
     }
 
-    private function dumpDatabase() {
+    public function dumpdb()
+    {
 
         // Generate pdo path
         $dsn = 'mysql:dbname=' . $GLOBALS['TL_CONFIG']['dbDatabase'] . ';host=' . $GLOBALS['TL_CONFIG']['dbHost'];
@@ -125,9 +90,12 @@ class ContaoBackup {
         $dump = new Mysqldump($dsn, $GLOBALS['TL_CONFIG']['dbUser'], $GLOBALS['TL_CONFIG']['dbPass']);
         $dump->start($this->dumpFilePath);
 
+        // Send file
+        return new BinaryFileResponse($this->dumpFilePath);
+
     }
 
-    public function list()
+    public function list(): Response
     {
         $arrFiles = [];
 
@@ -135,50 +103,41 @@ class ContaoBackup {
             $this->addFilesFromDirectory($directory, $arrFiles);
         }
 
-        var_dump($arrFiles);
-        exit();
+        foreach($this->files as $file) {
+            $this->addFile($file, $arrFiles);
+        }
+
+        return new Response(json_encode($arrFiles), Response::HTTP_OK, ['content-type' => 'application/json']);
 
     }
 
-    public function download()
+    public function file()
     {
 
-        // Create and open zip file
-        $this->openZip();
+        $name = isset($_GET["name"]) ? $_GET["name"] : "";
 
-        // Backup folders
-        $this->addDirToZip('app');
-        $this->addDirToZip('files');
-        $this->addDirToZip('templates');
-        $this->addDirToZip('config');
-        $this->addDirToZip('system/config');
-        $this->addDirToZip('contao-manager', false);
-        $this->addDirToZip('contao');
-        $this->addDirToZip('src');
-        $this->addDirToZip('_external');
+        // No name set
+        if (!$name) {
+            return new Response('Missing name parameter', Response::HTTP_BAD_REQUEST);
+        }
 
-        // Backup database
-        $this->dumpDatabase();
-        $this->zip->addFile($this->dumpFilePath, 'dump.sql');
+        // Absolute path
+        $absPath = realpath($this->rootDir . '/' . $name);
+        $file = is_file($absPath) ? $absPath : "";
 
-        // Backup composer.json
-        $this->zip->addFile($this->composerFilePath, 'composer.json');
+        // File not found
+        if (!$file) {
+            return new Response('File not found', Response::HTTP_NOT_FOUND);
+        }
 
-        // Close zip file
-        $this->closeZip();
+        // Block requests, if someone tries to break out the root directory
+        if (strpos($file, $this->rootDir) !== 0) {
+            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        }
 
-        // Delete database dump
-        unlink($this->dumpFilePath);
-
-        // Send zip file to client
-        $response = new BinaryFileResponse($this->zipFilePath);
-        $response->deleteFileAfterSend(true);
-        $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'backup-' . date('Y-m-d_H-m-s') . '.zip'
-        );
-        return $response;
-
+        // Send file
+        return new BinaryFileResponse($file);
+   
     }
 
     public function initializeSystem(): void
