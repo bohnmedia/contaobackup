@@ -119,7 +119,7 @@ class ContaoBackup {
 
         // Send zip file to client
         $response = new BinaryFileResponse($this->zipFilePath);
-        $response->deleteFileAfterSend();
+        $response->deleteFileAfterSend(true);
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             'backup-' . date('Y-m-d_H-m-s') . '.zip'
