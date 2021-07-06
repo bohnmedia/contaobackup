@@ -1,13 +1,13 @@
 contaobackup:
-    path: /contaobackup
-    defaults:
-        _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:loadAction
-        _scope: frontend
-        _token_check: false
+  path: /contaobackup/download
+  defaults:
+    _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:download
+    _scope: frontend
+    _token_check: false
 
 defaultbackuppassword:
-    path: /defaultbackuppassword
-    defaults:
-        _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:generateDefaultPassword
-        _scope: frontend
-        _token_check: false
+  path: /defaultbackuppassword
+  defaults:
+    _controller: BohnMedia\ContaoBackupBundle\Controller\BackupController:generateDefaultPassword
+    _scope: frontend
+    _token_check: false

@@ -22,8 +22,12 @@ class BackupController
       $this->config = $this->framework->getAdapter(Config::class);
       $this->contaobackup = $contaobackup;
   }
+
+  public function download(Request $request): Response {
+    return $this->checkKey($request, $this->contaobackup->binaryFileResponse);
+  }
   
-  public function loadAction(Request $request): Response
+  private function checkKey(Request $request, $callback): Response
   {
 
     $serverKey = $this->config->get('backupKey');
@@ -46,7 +50,7 @@ class BackupController
       return $response;
     }
 
-    return $this->contaobackup->binaryFileResponse();
+    return $callback();
 
   }
 
