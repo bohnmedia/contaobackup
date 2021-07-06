@@ -1,7 +1,7 @@
 {
     "name": "bohnmedia/contaobackup",
     "description": "Contao extension for backups",
-    "version": "1.1",
+    "version": "1.2",
     "keywords": [
         "contao",
         "backup"
