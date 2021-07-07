@@ -26,4 +26,6 @@ https://[HOSTNAME]]/contaobackup/dumpdb?&key=[BACKUP-KEY]
 
 Lädt einen Dump der Datenbank herunter.
 
+### Download-Script
+
 Backups können mit Hilfe des NodeJS-Scripts [bohnmedia/backupserver](https://github.com/bohnmedia/backupserver) automatisiert herunter geladen werden.
