@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": "^7.4 || ^8.0",
         "contao/core-bundle": "^4.4",
         "ifsnop/mysqldump-php": "^2.9"
     },
